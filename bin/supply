@@ -9,26 +9,18 @@ cache_path=$2
 deps_path=$3
 idx=$4
 
-mkdir -p /tmp/deps/$idx/profile.d
-
-mkdir -p /tmp/deps/$idx/bin
+mkdir -p $build_path/.profile.d
 
 echo "Fetching Hashicorp Vault package..."
 
 wget -q -O $cache_path/vault.zip https://releases.hashicorp.com/vault/${VAULT_VERSION}/vault_${VAULT_VERSION}_linux_amd64.zip
 
-unzip $cache_path/vault.zip -d /tmp/deps/$idx/bin
+unzip $cache_path/vault.zip -d $deps_path
 
-cat << EOF > /tmp/deps/$idx/config.yml
-name: vault-buildpack
-EOF
-
-cat << EOF > $build_path/.profile
+cat << EOF > $build_path/.profile.d/000-vault-init
 #!/bin/bash
 
 set -e
-
-echo "ASDASDASDSADA" > /tmp/tester
 
 echo "Running Vault init..."
 
