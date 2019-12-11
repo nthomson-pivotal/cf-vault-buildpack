@@ -23,6 +23,8 @@ if [ -z $VAULT_ADDR ]; then
   exit
 fi
 
+chmod +x /tmp/deps/$idx/profile.d/0000-vault.sh
+
 if [ -z $VAULT_ROLE ]; then
   exit
 fi
