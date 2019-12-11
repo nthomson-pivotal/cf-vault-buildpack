@@ -20,5 +20,5 @@ if [ -z $VAULT_ROLE ]; then
   exit
 fi
 
-vault login -method=cf role=$VAULT_ROLE
+$HOME/deps/vault login -method=cf role=$VAULT_ROLE
 EOF
