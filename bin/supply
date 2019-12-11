@@ -21,6 +21,12 @@ name: vault-buildpack
 EOF
 
 cat << EOF > /tmp/app/profile.d/0000-vault.sh
+#!/bin/bash
+
+set -e
+
+echo "ASDASDASDSADA" > /tmp/tester
+
 echo "Running Vault init..."
 
 if [ -z $VAULT_ADDR ]; then
