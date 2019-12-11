@@ -1,10 +1,24 @@
 #!/bin/bash
 
+set -e
+
 cache_path=$2
 deps_path=$3
 
 echo "Fetching Hashicorp Vault package..."
 
-wget -O $cache_path/vault.zip https://releases.hashicorp.com/vault/1.3.0/vault_1.3.0_linux_amd64.zip
+wget -q -O $cache_path/vault.zip https://releases.hashicorp.com/vault/1.3.0/vault_1.3.0_linux_amd64.zip
 
 unzip $cache_path/vault.zip -d $deps_path
+
+cat << EOF > $HOME/profile.d/0000-vault.sh
+if [ -z $VAULT_ADDR ]; then
+  exit
+fi
+
+if [ -z $VAULT_ROLE ]; then
+  exit
+fi
+
+vault login -method=cf role=$VAULT_ROLE
+EOF
