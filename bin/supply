@@ -18,12 +18,12 @@ cat << EOF > /tmp/deps/$idx/config.yml
 name: vault-buildpack
 EOF
 
-cat << EOF > /tmp/deps/$idx/profile.d/0000-vault.sh
+cat << EOF > /tmp/app/profile.d/0000-vault.sh
 if [ -z $VAULT_ADDR ]; then
   exit
 fi
 
-chmod +x /tmp/deps/$idx/profile.d/0000-vault.sh
+chmod +x /tmp/app/profile.d/0000-vault.sh
 
 if [ -z $VAULT_ROLE ]; then
   exit
