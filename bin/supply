@@ -14,6 +14,8 @@ unzip $cache_path/vault.zip -d $deps_path
 
 mkdir -p /tmp/deps/$idx/profile.d
 
+mkdir -p /tmp/app/profile.d
+
 cat << EOF > /tmp/deps/$idx/config.yml
 name: vault-buildpack
 EOF
