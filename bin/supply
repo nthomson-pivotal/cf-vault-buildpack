@@ -6,21 +6,21 @@ cache_path=$2
 deps_path=$3
 idx=$4
 
+mkdir -p /tmp/deps/$idx/profile.d
+
+mkdir -p /tmp/deps/$idx/bin
+
 echo "Fetching Hashicorp Vault package..."
 
 wget -q -O $cache_path/vault.zip https://releases.hashicorp.com/vault/1.3.0/vault_1.3.0_linux_amd64.zip
 
-unzip $cache_path/vault.zip -d $deps_path
-
-mkdir -p /tmp/deps/$idx/profile.d
-
-mkdir -p /tmp/app/profile.d
+unzip $cache_path/vault.zip -d /tmp/deps/$idx/bin
 
 cat << EOF > /tmp/deps/$idx/config.yml
 name: vault-buildpack
 EOF
 
-cat << EOF > /tmp/app/profile.d/0000-vault.sh
+cat << EOF > /tmp/deps/$idx/profile.d/0000-vault.sh
 #!/bin/bash
 
 set -e
@@ -42,4 +42,4 @@ fi
 \$HOME/deps/vault login -method=cf role=\$VAULT_ROLE
 EOF
 
-chmod +x /tmp/app/profile.d/0000-vault.sh
+chmod +x /tmp/deps/$idx/profile.d/0000-vault.sh
