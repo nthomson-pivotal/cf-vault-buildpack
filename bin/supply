@@ -4,6 +4,7 @@ set -e
 
 cache_path=$2
 deps_path=$3
+idx=$4
 
 echo "Fetching Hashicorp Vault package..."
 
@@ -11,7 +12,13 @@ wget -q -O $cache_path/vault.zip https://releases.hashicorp.com/vault/1.3.0/vaul
 
 unzip $cache_path/vault.zip -d $deps_path
 
-cat << EOF > $HOME/profile.d/0000-vault.sh
+mkdir -p /tmp/deps/$idx/profile.d
+
+cat << EOF > /tmp/deps/$idx/config.yml
+name: vault-buildpack
+EOF
+
+cat << EOF > /tmp/deps/$idx/profile.d/0000-vault.sh
 if [ -z $VAULT_ADDR ]; then
   exit
 fi
