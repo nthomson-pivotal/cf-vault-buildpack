@@ -26,7 +26,9 @@ echo "Running Vault init..."
 
 if [ -z \$VAULT_ADDR ]; then
   echo "Skipping due to missing VAULT_ADDR"
+elif [ -z \$VAULT_ROLE ]; then
+  echo "Skipping due to missing VAULT_ROLE"
+else
+  \$HOME/deps/vault login -method=cf role=\$VAULT_ROLE
 fi
-
-\$HOME/deps/vault login -method=cf role=\$VAULT_ROLE
 EOF
